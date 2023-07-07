@@ -4,10 +4,10 @@
 */
 
 const { Router } = require('express');
-const { check } = require('express-validator')
+const { check } = require('express-validator');
 const { validateFields } = require('../middlewares/validateFields');
 const { createUser, logInUser, renewToken } = require('../controllers/auth');
-const { validarJWT } = require('../middlewares/validarJWT')
+const { validarJWT } = require('../middlewares/validarJWT');
 
 const router = Router();
 

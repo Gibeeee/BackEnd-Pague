@@ -25,7 +25,7 @@ const validarJWT = ( req, res = response, next ) => {
         return res.status(402).json({
             ok: false,
             msg: 'Invalid Token'
-        })
+        });
     }
 
     next();
@@ -33,4 +33,4 @@ const validarJWT = ( req, res = response, next ) => {
 
 module.exports = {
     validarJWT
-} 
+};

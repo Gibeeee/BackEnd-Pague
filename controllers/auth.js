@@ -1,15 +1,15 @@
-const { response } = require('express')
-const bcrypt = require('bcryptjs')
-const User = require('../models/User')
-const { generateJWT } = require('../helpers/jwt')
+const { response } = require('express');
+const bcrypt = require('bcryptjs');
+const User = require('../models/User');
+const { generateJWT } = require('../helpers/jwt');
 
 
 const createUser = async(req, res = response) => {
     
-    const { email, password } = req.body
+    const { email, password } = req.body;
 
     try {
-        let user = await User.findOne({ email })
+        let user = await User.findOne({ email });
 
         if ( user ) {
             return res.status(400).json({
@@ -25,7 +25,7 @@ const createUser = async(req, res = response) => {
         
         await user.save();
 
-        const token = await generateJWT( user.id, user.name )
+        const token = await generateJWT( user.id, user.name );
     
         res.status(201).json({
             ok: true,
@@ -39,16 +39,16 @@ const createUser = async(req, res = response) => {
         res.status(500).json({
             ok: false,
             msg: 'Some error happens'
-        })
+        });
     }
-}
+};
 
 const logInUser = async (req, res = response) => {
 
-    const { email, password } = req.body
+    const { email, password } = req.body;
 
     try {
-        const user = await User.findOne({ email })
+        const user = await User.findOne({ email });
         
         if ( !user ) {
             return res.status(400).json({
@@ -66,7 +66,7 @@ const logInUser = async (req, res = response) => {
             });
         }
 
-        const token = await generateJWT( user.id, user.name )
+        const token = await generateJWT( user.id, user.name );
 
         res.json({
             ok: true,
@@ -74,31 +74,31 @@ const logInUser = async (req, res = response) => {
             uid: user.id,
             name: user.name,
             token
-        })
+        });
         
     } catch (error) {
         console.log(error);
         res.status(500).json({
             ok: false,
             msg: 'Some error happens'
-        })
+        });
     }
-}
+};
 
 const renewToken = async(req, res = response) => {
 
     const { uid, name } = req;
 
-    const token = await generateJWT( uid, name )
+    const token = await generateJWT( uid, name );
 
     res.json({
         ok: true,
         token
-    })
-}
+    });
+};
 
 module.exports = {
     createUser,
     logInUser,
     renewToken,
-}
+};
